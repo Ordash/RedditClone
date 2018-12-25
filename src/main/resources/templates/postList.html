@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+</head>
+<body>
+<a th:href="@{/posts/add}">Submit new post</a>
+<h1>Trending Posts</h1>
+<table>
+    <tbody>
+    <tr th:each="post : ${posts}" th:object="${post}">
+        <td th:text="*{vote}"></td>
+        <td><a th:href="@{|/posts/upvote/*{id}/?page=${page}|}"th:text="'+'"></a></td>
+        <td><a th:href="@{|/posts/downvote/*{id}/?page=${page}|}"th:text="'-'"></a></td>
+        <td><a th:href="@{|/posts/?content=*{id}|}"th:text="*{title}"></a></td>
+        <td th:text="*{date}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<div>
+    <nav>
+        <ul>
+            <li th:each="i : ${#numbers.sequence(0,posts.totalPages-1)}">
+                <a th:href="@{/posts/(page=${i})}" th:text="${i+1}" class="page-link"></a>
+            </li>
+        </ul>
+    </nav>
+</div>
+</body>
+</html>
